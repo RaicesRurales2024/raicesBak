@@ -81,15 +81,17 @@ export const login = async (req, res) => {
       return res.status(401).json(["Contraseña incorrecta."]);
     }
 
-    //const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
-
-    //res.cookie('token', token);
+    const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
+    
+    res.cookie('token', token);
+    
     res.json({
       nombre: existingUser.nombre,
       apellido: existingUser.apellido,
       correo: existingUser.correo,
       telefono: existingUser.telefono,
       username: existingUser.username,
+      token: token,
     });
 
   } catch (error) {
@@ -167,7 +169,7 @@ export const putUser = async (req, res) => {
   }
 }
 
-/*export const verifyToken = async (req, res) => {
+export const verifyToken = async (req, res) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -180,7 +182,6 @@ export const putUser = async (req, res) => {
     }
 
     try {
-      // Buscar al usuario en Supabase
       const { data: userFound, error } = await supabase
         .from('usuarios')
         .select('id, username, correo, telefono, nombre, apellido, tipoUser')
@@ -202,4 +203,4 @@ export const putUser = async (req, res) => {
       return res.status(500).json({ message: "Error interno del servidor" });
     }
   });
-};*/
+};

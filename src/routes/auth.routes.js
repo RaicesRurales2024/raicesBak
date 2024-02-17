@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {login, register, logout, profile, putUser} from '../controllers/auth.controller.js'
+import {login, register, logout, verifyToken, profile, putUser} from '../controllers/auth.controller.js'
 //import { authRequire } from '../middlewares/validateToken.js'
 import {validateSchema} from '../middlewares/validator.Middleware.js'
 import {registerSchema, loginSchema} from '../schemas/auth.Schema.js'
@@ -12,7 +12,7 @@ router.post('/login',validateSchema(loginSchema), login)
 
 router.post('/logout', logout)
 
-//router.get('/verify', verifyToken)
+router.get('/verify', verifyToken)
 
 router.get('/profile', profile)
 
