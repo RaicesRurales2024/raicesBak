@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from '../config.js';
 
+let token = null; 
+
 export const register = async (req, res) => {
   const { nombre, apellido, telefono, correo, username, password, tipoUser } = req.body;
 
@@ -72,7 +74,6 @@ export const login = async (req, res) => {
       return res.status(404).json(["Usuario no encontrado."]);
     }
 
-    // Verificar la contraseña
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) {
@@ -80,10 +81,9 @@ export const login = async (req, res) => {
       return res.status(401).json(["Contraseña incorrecta."]);
     }
 
-    // Generar token de acceso
-    const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
+    //const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
 
-    res.cookie('token', token);
+    //res.cookie('token', token);
     res.json({
       nombre: existingUser.nombre,
       apellido: existingUser.apellido,
@@ -99,21 +99,21 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  res.clearCookie('token');
+  //res.clearCookie('token');
   return res.sendStatus(200);
 };
 
 export const profile = async (req, res) => {
-  const token = req.cookies.token;
+  //const token = req.cookies.token;
 
-  if (!token) {
+  /*if (!token) {
     return res.status(401).json({ message: "Sin autorizacion" });
   }
 
   jwt.verify(token, TOKEN_SECRET, async (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Sin autorizacion" });
-    }
+    }*/
 
     try {
       // Obtener información del usuario desde Supabase
@@ -146,7 +146,7 @@ export const profile = async (req, res) => {
       console.error(error);
       return res.status(500).json({ message: "Error interno del servidor" });
     }
-  });
+  //});
 };
 
 export const putUser = async (req, res) => {
@@ -167,7 +167,7 @@ export const putUser = async (req, res) => {
   }
 }
 
-export const verifyToken = async (req, res) => {
+/*export const verifyToken = async (req, res) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -202,4 +202,4 @@ export const verifyToken = async (req, res) => {
       return res.status(500).json({ message: "Error interno del servidor" });
     }
   });
-};
+};*/
