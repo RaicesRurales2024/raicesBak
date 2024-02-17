@@ -59,7 +59,7 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Buscar al usuario por el username
+    
     const { data: existingUser, error } = await supabase
       .from('usuarios')
       .select('*')
@@ -83,7 +83,9 @@ export const login = async (req, res) => {
 
     const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
     
-    res.cookie('token', token);
+    res.cookie('token', token, {
+      httpOnly: true
+    });
     
     res.json({
       nombre: existingUser.nombre,
