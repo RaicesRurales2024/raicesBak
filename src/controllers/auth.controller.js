@@ -106,19 +106,18 @@ export const logout = async (req, res) => {
 };
 
 export const profile = async (req, res) => {
-  //const token = req.cookies.token;
-
-  /*if (!token) {
+  const token = req.cookies.token;
+  if (!token) {
     return res.status(401).json({ message: "Sin autorizacion" });
   }
 
   jwt.verify(token, TOKEN_SECRET, async (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Sin autorizacion" });
-    }*/
+    }
 
     try {
-      // Obtener información del usuario desde Supabase
+
       const { data: user, error } = await supabase
         .from('usuarios')
         .select('*')
@@ -133,7 +132,6 @@ export const profile = async (req, res) => {
         return res.status(400).json({ message: "Usuario no encontrado" });
       }
 
-      // Enviar información del usuario al cliente
       res.json({
         id: user.id,
         username: user.username,
@@ -148,7 +146,7 @@ export const profile = async (req, res) => {
       console.error(error);
       return res.status(500).json({ message: "Error interno del servidor" });
     }
-  //});
+  });
 };
 
 export const putUser = async (req, res) => {
