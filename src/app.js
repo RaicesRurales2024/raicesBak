@@ -13,7 +13,8 @@ const app = express();
 const allowedOrigins = [
     'https://raicesrurales.vercel.app',
     'http://localhost:5173', 
-    'https://raices-front-7rdinydyq-raices-projects.vercel.app'
+    'https://raices-front-7rdinydyq-raices-projects.vercel.app',
+    'https://raicesruralesf.onrender.com'
   ];
 
   app.use(cors({
