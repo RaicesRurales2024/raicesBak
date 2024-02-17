@@ -11,7 +11,7 @@ import cors from 'cors'
 const app = express();
 
 const allowedOrigins = [
-    'https://raicesrurales.vercel.app/',
+    'https://raicesrurales.vercel.app',
     'http://localhost:5173'
   ];
 
