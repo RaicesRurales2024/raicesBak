@@ -84,7 +84,9 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: existingUser.id }, TOKEN_SECRET);
     
     res.cookie('token', token, {
-      httpOnly: true
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict'
     });
     
     res.json({
@@ -98,7 +100,7 @@ export const login = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json(["Error al iniciar sesión."]);
+    res.status(500).json({ message: "Error al iniciar sesión" });
   }
 };
 
